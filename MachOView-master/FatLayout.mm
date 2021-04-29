@@ -46,9 +46,9 @@ using namespace std;
                   fat_header:(struct fat_header const *)fat_header
 {
   MVNodeSaver nodeSaver;
-  MVNode * node = [parent insertChildWithDetails:caption 
-                                        location:location 
-                                          length:sizeof(struct fat_header) + fat_header->nfat_arch * sizeof(struct fat_arch)
+  MVNode * node = [parent insertChildWithDetails:caption  //fat header
+                                        location:location  // 0
+                                          length:sizeof(struct fat_header) + fat_header->nfat_arch * sizeof(struct fat_arch) // fat_header + fat_arch * number
                                            saver:nodeSaver]; 
 
   NSRange range = NSMakeRange(location,0);

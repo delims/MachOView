@@ -1151,6 +1151,7 @@ NSString * const MVStatusTaskTerminated           = @"MVStatusTaskTerminated";
 -(void)createFatLayout:(MVNode *)node
             fat_header:(struct fat_header const *)fat_header
 {
+    //node  父节点
   node.caption = @"Fat Binary";
   FatLayout * layout = [FatLayout layoutWithDataController:self rootNode:node];
   
@@ -1162,10 +1163,13 @@ NSString * const MVStatusTaskTerminated           = @"MVStatusTaskTerminated";
     // need to make copy for byte swapping
     struct fat_arch fat_arch;
     [fileData getBytes:&fat_arch range:NSMakeRange(sizeof(struct fat_header) + nimg * sizeof(struct fat_arch), sizeof(struct fat_arch))];
-    swap_fat_arch(&fat_arch, 1, NX_LittleEndian);
     
+      
+    swap_fat_arch(&fat_arch, 1, NX_LittleEndian);
+    ///  把 架构 相关结点加入到根节点
     MVNode * archNode = [node insertChild:nil location:fat_arch.offset length:fat_arch.size];
 
+      
     if (*(uint64_t*)((uint8_t *)[fileData bytes] + fat_arch.offset) == *(uint64_t*)"!<arch>\n")
     {
       [self createArchiveLayout:archNode machine:[self getMachine:fat_arch.cputype]];

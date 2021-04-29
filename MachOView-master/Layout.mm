@@ -40,7 +40,7 @@
     imageOffset = node.dataRange.location;
     imageSize = node.dataRange.length;
     backgroundThread = [[NSThread alloc] initWithTarget:self selector:@selector(doBackgroundTasks) object:nil];
-    
+      
     const char *tmp = [[MVDocument temporaryDirectory] UTF8String];
     char *swapFilePath = strdup(tmp);
     if (mktemp(swapFilePath) == NULL)

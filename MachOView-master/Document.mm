@@ -352,7 +352,7 @@ enum ViewType
              object:nil]; 
     */
     [nc addObserver:weakSelf
-           selector:@selector(handleDataTreeChanged:) 
+           selector:@selector(handleDataTreeChanged:)
                name:MVDataTreeChangedNotification
              object:nil]; 
     
@@ -403,6 +403,7 @@ enum ViewType
 //----------------------------------------------------------------------------
 - (void)handleDataTreeChanged:(NSNotification *)notification
 {
+    printf("%s\n","handleDataTreeChanged");
   if ([notification object] == dataController)
   {
     dispatch_async(dispatch_get_main_queue(), ^
@@ -438,6 +439,7 @@ enum ViewType
 //----------------------------------------------------------------------------
 - (void)handleDataTableChanged:(NSNotification *)notification
 {
+    printf("%s\n","handleDataTableChanged");
   if ([notification object] == dataController)
   {
     [rightView noteNumberOfRowsChanged];
@@ -448,6 +450,7 @@ enum ViewType
 //----------------------------------------------------------------------------
 - (void)handleThreadStateChanged:(NSNotification *)notification
 {
+    printf("%s\n","handleThreadStateChanged");
   if ([notification object] == dataController)
   {
     NSString * threadState = [[notification userInfo] objectForKey:MVStatusUserInfoKey];
@@ -485,6 +488,7 @@ enum ViewType
 {
   [super windowControllerDidLoadNib:aController];
   
+    printf("%s\n","windowControllerDidLoadNib");
   // fill in initial data sources
   [statusText setStringValue:@"Loading..."];
   for (MVLayout * layout in dataController.layouts)
