@@ -114,10 +114,10 @@ struct MVNodeSaver;
 //----------------------------------------------------------------------------
 @interface MVNode : NSObject <MVSerializing>
 {
-  NSString *            caption;
-  MVNode *              __weak parent;
-  NSMutableArray *      children;
-  NSRange               dataRange;
+  NSString *            caption; // display name
+  MVNode *              __weak parent; // parent node
+  NSMutableArray *      children; // children node
+  NSRange               dataRange; // node data range, location and size
   MVTable *             details;
   NSMutableDictionary * userInfo;
   uint32_t              detailsOffset;

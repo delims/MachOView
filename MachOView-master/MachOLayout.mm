@@ -735,17 +735,17 @@ _hex2int(char const * a, uint32_t len)
       case LC_SEGMENT_64:     
       {
         struct segment_command_64 const * segment_command_64 = (struct segment_command_64 const *)load_command;
-        
+        // delims : only TEXT segment meet this condition
         if (segment_command_64->fileoff == 0 && segment_command_64->filesize != 0)
         {
-					base_addr = segment_command_64->vmaddr;
+            base_addr = segment_command_64->vmaddr; // TEXT vmaddr is 0x100000000
         }
         
         if(segment_command_64->vmaddr < seg1addr)
         {
           seg1addr = segment_command_64->vmaddr;
         }
-        
+        // delims: only DATA segment meet this condition
         // Pickup the address of the first read-write segment for MH_SPLIT_SEGS images.
         if((segment_command_64->initprot & VM_PROT_WRITE) == VM_PROT_WRITE &&
            segment_command_64->vmaddr < segs_read_write_addr)
@@ -776,6 +776,9 @@ _hex2int(char const * a, uint32_t len)
   
   if (symtab_command)
   {
+      //delims: nlist_64 is symbol table entry struct
+      // symoff is symbol offset in the image
+      // sizeof(struct nlist_64) * nsyms is total symbol size
     symtabNode = [self createDataNode:rootNode
                               caption:@"Symbol Table"
                              location:symtab_command->symoff + imageOffset
