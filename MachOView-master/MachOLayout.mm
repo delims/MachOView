@@ -2435,7 +2435,7 @@ struct CompareSectionByName
       {
         [self printException:exception caption:lastNodeCaption];
       }
-      
+      // 每次移动一个 cmdsize 大小
       fileOffset += load_command->cmdsize;
     }
   }
